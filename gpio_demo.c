@@ -24,7 +24,11 @@ MODULE_VERSION("1.0");
 
 // --------- 模块参数 ----------
 static int gpio = -1;              // 传入的 GPIO 号（必须）
+//module_param是一个宏定义，是在sudo insmod gpio_demo.ko gpio=21要传入的参数
+//参数：gpio-给这个变量传值，int-传入是的是一个整型，0644-对应 /sys/module/<模块名>/parameters/ 目录下的接口文件权限。
 module_param(gpio, int, 0644);
+//MODULE_PARM_DESC-模型的参数描述，使用效果：modinfo gpio_demo.ko
+//显示：parm:           gpio:GPIO number to control (required) (int)
 MODULE_PARM_DESC(gpio, "GPIO number to control (required)");
 
 static bool initial_is_output = true; // 初始是否设为输出
@@ -268,3 +272,4 @@ static void __exit gpio_demo_exit(void)
 
 module_init(gpio_demo_init);
 module_exit(gpio_demo_exit);
+
